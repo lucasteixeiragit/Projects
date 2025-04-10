@@ -1,0 +1,3 @@
+PIP INSTALL
+requests
+yt_dlp
