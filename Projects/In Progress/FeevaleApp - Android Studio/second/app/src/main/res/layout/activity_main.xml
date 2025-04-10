@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="129dp"
+        android:layout_height="56dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Voltar"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="668dp" />
+
+    <Button
+        android:layout_width="129dp"
+        android:layout_height="56dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Contato Suporte"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="279dp"
+        tools:layout_editor_absoluteY="668dp" />
+
+    <Button
+
+        android:layout_width="218dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Mapa das Instituições Parceiras"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="439dp" />
+
+    <Button
+
+        android:layout_width="129dp"
+        android:layout_height="56dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Ler QRCode"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="367dp" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="222dp"
+        android:layout_height="142dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="56dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:srcCompat="@drawable/logo_bordas"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

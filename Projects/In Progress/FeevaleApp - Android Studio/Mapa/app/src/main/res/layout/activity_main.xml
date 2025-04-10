@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:context=".MainActivity">
+
+        <View
+            android:id="@+id/containerComponents5"
+            style="@style/ContainerComponents"
+            android:layout_width="400dp"
+            android:layout_height="627dp"
+            android:layout_marginStart="391dp"
+            android:layout_marginTop="711dp"
+            android:layout_marginEnd="411dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.518"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.235" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="129dp"
+            android:layout_height="56dp"
+            android:backgroundTint="#8BC34A"
+            android:text="Listar locais cadastrados"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="252dp"
+            tools:layout_editor_absoluteY="668dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="129dp"
+            android:layout_height="56dp"
+            android:backgroundTint="#8BC34A"
+            android:text="Voltar"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="668dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="380dp"
+            android:layout_height="699dp"
+            app:srcCompat="@drawable/maps2"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="-11dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="326dp"
+            android:layout_height="581dp"
+            android:background="#FFFFFF"
+            android:scrollbarStyle="outsideInset"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="60dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
