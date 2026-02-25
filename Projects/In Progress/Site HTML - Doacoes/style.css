@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* { /* RESETAR AS POSICOES DOS ELEMENTOS */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;  /* fazer com que ocupe a tela inteira do navegador */
+    box-sizing: border-box;
+    background-color: rgb(246, 239, 239);
+    color: rgb(69, 74, 79);
+}
+
+.cabecalho{
+    margin: 40px;
+    color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu{
+    color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.button_donate{
+    border: 1px solid black;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+
+    margin: 30px;
+}
+
+.apresentacao{
+    margin: 20px;
+    display: flex;
+    flex-direction: column; /* definir elementos em ordem de coluna */
+    align-items: center;  /* centralizar conteudo no meio da tela */
+}
+
+.apresentacao__titulo{
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    font-family: "Krona One", sans-serif;
+    
+}
+
+.apresentacao__descricao{
+    color: #6B7076;
+    width: 50%;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;  /* CENTRALIZAR O TEXTO */
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+
+}
+
+.apresentacao__links{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 50px;
+}
+
+.apresentacao__links_link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.apresentacao__links_link img {
+    width: 200px;
+    height: 200px;
+}
+
+.apresentacao__links__link{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 200px;
+    background-color: #FCF9F9;
+    color: #575F65;
+    border: 2px solid #E9E4E5;
+    border-radius: 50px;
+    padding: 50px 50px;
+    text-decoration: none; /* retirar o sublinhado do link */
+    font-size: 24px;
+    font-weight: 550;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+}
+
+/* h1{  CABECALHO 
+    background-color: white;
+    border: 1px solid white;
+    margin: 10px;
+    padding: 20px;
+    
+}  */
+
+/* .title{
+    color: black;
+} */
+
+
+/* span{
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 10px;
+} */
+
+
+
+
+
+
+
+
