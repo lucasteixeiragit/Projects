@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root{
+    --color-background: #FCF9F9;
+    --color-text-description: #6B7076;
+}
+
 * { /* RESETAR AS POSICOES DOS ELEMENTOS */
     margin: 0;
     padding: 0;
@@ -13,7 +18,7 @@ body {
 }
 
 .cabecalho{
-    background-color: #FCF9F9;
+    background-color: var(--color-background);
     border: 2px solid #E9E4E5;
     border-radius: 10px;
     margin: 20px 15%;
