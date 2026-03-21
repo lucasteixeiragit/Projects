@@ -74,7 +74,11 @@ body {
     justify-content: left;
     font-family: "Montserrat", sans-serif;
     text-decoration: none;
+<<<<<<< Updated upstream
     font-size: 1.625rem;
+=======
+    font-size: 1.5rem;
+>>>>>>> Stashed changes
     order: 0;
     margin-right: auto;
     color: #575F65;
