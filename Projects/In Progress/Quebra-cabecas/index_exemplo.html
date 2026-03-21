@@ -1,201 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
-  <title>15-Puzzle</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f0f0f0;
-      padding: 30px;
-    }
-
-    h1 {
-      color: #333;
-    }
-
-    .grid {
-      display: inline-grid;
-      grid-template-columns: repeat(4, 80px);
-      gap: 5px;
-      margin: 20px auto;
-    }
-
-    .tile {
-      width: 80px;
-      height: 80px;
-      background: #4a90e2;
-      color: white;
-      font-size: 22px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .tile.vazio {
-      background: #ccc;
-      cursor: default;
-    }
-
-    button {
-      margin: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background: #2ecc71;
-      color: white;
-    }
-
-    #info {
-      margin-top: 15px;
-      font-size: 16px;
-      color: #555;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quebra-Cabeça 15 - George Luger</title>
+  <!-- Link para o arquivo CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
   <h1>15-Puzzle</h1>
-  <p>Clique nas peças para mover ou use o botão para resolver com A*</p>
+  <p>Implementação de Busca Heurística (A*) - Cap. 4 Luger</p>
 
+  <!-- Onde o tabuleiro será gerado -->
   <div class="grid" id="grid"></div>
 
-  <br>
-  <button onclick="embaralhar()">Embaralhar</button>
-  <button onclick="resolver()">Resolver com A*</button>
+  <div class="controls">
+    <button onclick="embaralhar()">Embaralhar</button>
+    <button class="btn-solve" onclick="resolver()">Resolver com A*</button>
+  </div>
 
+  <!-- Área para exibir estatísticas da busca -->
   <div id="info"></div>
 
-  <script>
-    var tabuleiro = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
-    var objetivo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
-
-    function desenhar() {
-      var grid = document.getElementById('grid');
-      grid.innerHTML = '';
-      for (var i = 0; i < 16; i++) {
-        var btn = document.createElement('button');
-        btn.className = 'tile' + (tabuleiro[i] === 0 ? ' vazio' : '');
-        btn.innerText = tabuleiro[i] === 0 ? '' : tabuleiro[i];
-        btn.onclick = (function (idx) {
-          return function () { mover(idx); };
-        })(i);
-        grid.appendChild(btn);
-      }
-    }
-
-    function mover(idx) {
-      var vazio = tabuleiro.indexOf(0);
-      var r1 = Math.floor(idx / 4), c1 = idx % 4;
-      var r2 = Math.floor(vazio / 4), c2 = vazio % 4;
-      if (Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1) {
-        tabuleiro[vazio] = tabuleiro[idx];
-        tabuleiro[idx] = 0;
-        desenhar();
-      }
-    }
-
-    function embaralhar() {
-      for (var i = 0; i < 200; i++) {
-        var vazio = tabuleiro.indexOf(0);
-        var vizinhos = [];
-        if (vazio >= 4) vizinhos.push(vazio - 4);
-        if (vazio < 12) vizinhos.push(vazio + 4);
-        if (vazio % 4 !== 0) vizinhos.push(vazio - 1);
-        if (vazio % 4 !== 3) vizinhos.push(vazio + 1);
-        var escolha = vizinhos[Math.floor(Math.random() * vizinhos.length)];
-        var tmp = tabuleiro[vazio];
-        tabuleiro[vazio] = tabuleiro[escolha];
-        tabuleiro[escolha] = tmp;
-      }
-      document.getElementById('info').innerText = '';
-      desenhar();
-    }
-
-    function manhattan(board) {
-      var dist = 0;
-      for (var i = 0; i < 16; i++) {
-        if (board[i] === 0) continue;
-        var val = board[i] - 1;
-        dist += Math.abs(Math.floor(i / 4) - Math.floor(val / 4)) + Math.abs(i % 4 - val % 4);
-      }
-      return dist;
-    }
-
-    function resolver() {
-      var inicio = Date.now();
-      var abertos = [{ board: tabuleiro.slice(), g: 0, h: manhattan(tabuleiro), pai: null }];
-      var fechados = new Set();
-      var expandidos = 0;
-
-      while (abertos.length > 0) {
-        abertos.sort(function (a, b) { return (a.g + a.h) - (b.g + b.h); });
-        var atual = abertos.shift();
-        expandidos++;
-
-        if (atual.board.join() === objetivo.join()) {
-          var caminho = [];
-          var no = atual;
-          while (no) { caminho.push(no.board); no = no.pai; }
-          caminho.reverse();
-          animar(caminho);
-          document.getElementById('info').innerText =
-            'Movimentos: ' + (caminho.length - 1) +
-            ' | Nós expandidos: ' + expandidos +
-            ' | Tempo: ' + (Date.now() - inicio) + 'ms';
-          return;
-        }
-
-        fechados.add(atual.board.join());
-        if (expandidos > 15000) {
-          document.getElementById('info').innerText = 'Muito complexo para resolver aqui.';
-          return;
-        }
-
-        var vazio = atual.board.indexOf(0);
-        var movimentos = [-4, 4, -1, 1];
-
-        for (var m = 0; m < movimentos.length; m++) {
-          var prox = vazio + movimentos[m];
-          if (prox < 0 || prox >= 16) continue;
-          if (movimentos[m] === -1 && vazio % 4 === 0) continue;
-          if (movimentos[m] === 1 && vazio % 4 === 3) continue;
-
-          var novoBoard = atual.board.slice();
-          novoBoard[vazio] = novoBoard[prox];
-          novoBoard[prox] = 0;
-
-          if (fechados.has(novoBoard.join())) continue;
-
-          abertos.push({
-            board: novoBoard,
-            g: atual.g + 1,
-            h: manhattan(novoBoard),
-            pai: atual
-          });
-        }
-      }
-    }
-
-    function animar(caminho) {
-      var i = 0;
-      var intervalo = setInterval(function () {
-        if (i >= caminho.length) { clearInterval(intervalo); return; }
-        tabuleiro = caminho[i];
-        desenhar();
-        i++;
-      }, 250);
-    }
-
-    desenhar();
-  </script>
-
+  <!-- Link para o arquivo JavaScript -->
+  <script src="script.js"></script>
 </body>
-
 </html>
