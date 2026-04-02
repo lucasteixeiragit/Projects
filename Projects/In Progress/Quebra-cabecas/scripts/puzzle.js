@@ -12,6 +12,10 @@ function embaralhar() {
 
       }
 
-    
+  
+    }
+
+    function busca_em_amplitude{
+        var abertos = []
 
     }
