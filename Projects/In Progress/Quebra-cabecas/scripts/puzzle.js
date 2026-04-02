@@ -2,20 +2,32 @@ var tabuleiro = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
 
 var objetivo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
 
-function embaralhar() {
-    for (var i = 0; i <2 100; i++) // Embaralha o tabuleiro 100 vezes, tornando possivel resolver, por serem movimentos validos
-      {
-        var vazio = tabuleiro.indexOf(0); //identifica posicao do espaço vazio (0) dentro do array
-        var vizinhos = []; //cria um array para armazenar os vizinhos do espaço vazio
+function desenhar(){
+  var grid = document.getElementById('grid');
+  grid.innerHTML='';
 
-        if (vazio >= 4)
+  for(var i = 0; i<16; i++){ //tamanho do tabuleiro
+    var bnt = document.createElement('button');
 
-      }
-
-  
+    if(tabuleiro[i] === 0){
+      bnt.className = 'peca vazia';
+    }else{
+      bnt.className = 'peca';
     }
+    
+  }
 
-    function busca_em_amplitude{
-        var abertos = []
+}
 
-    }
+
+
+
+
+function busca_em_amplitude(){
+  var abertos = []
+
+}
+
+function busca_melhor_escolha(){
+
+}

@@ -148,3 +148,146 @@ function animarSolucao(caminho) {
 
 // Inicializa o jogo ao carregar a página
 desenhar();
+
+
+
+/* ============================================================== */ 
+
+
+var tabuleiro = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+var objetivo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+
+// Função para desenhar o tabuleiro
+function desenhar() {
+  var grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  for (var i = 0; i < 16; i++) {
+    var btn = document.createElement('button');
+    btn.className = 'tile' + (tabuleiro[i] === 0 ? ' vazio' : '');
+    btn.innerText = tabuleiro[i] === 0 ? '' : tabuleiro[i];
+    btn.onclick = (function(idx) {
+      return function() { mover(idx); };
+    })(i);
+    grid.appendChild(btn);
+  }
+}
+
+// Função para mover peças
+function mover(idx) {
+  var vazio = tabuleiro.indexOf(0);
+  var r1 = Math.floor(idx / 4), c1 = idx % 4;
+  var r2 = Math.floor(vazio / 4), c2 = vazio % 4;
+  
+  if (Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1) {
+    var tmp = tabuleiro[vazio];
+    tabuleiro[vazio] = tabuleiro[idx];
+    tabuleiro[idx] = tmp;
+    desenhar();
+  }
+}
+
+// Função para embaralhar o tabuleiro
+function embaralhar() {
+  for (var i = 0; i < 200; i++) {
+    var vazio = tabuleiro.indexOf(0);
+    var vizinhos = [];
+    
+    if (vazio >= 4) vizinhos.push(vazio - 4); // Cima
+    if (vazio < 12) vizinhos.push(vazio + 4); // Baixo
+    if (vazio % 4 !== 0) vizinhos.push(vazio - 1); // Esquerda
+    if (vazio % 4 !== 3) vizinhos.push(vazio + 1); // Direita
+    
+    var escolha = vizinhos[Math.floor(Math.random() * vizinhos.length)];
+    var tmp = tabuleiro[vazio];
+    tabuleiro[vazio] = tabuleiro[escolha];
+    tabuleiro[escolha] = tmp;
+  }
+  document.getElementById('info').innerText = 'Tabuleiro embaralhado!';
+  desenhar();
+}
+
+// Algoritmo BFS (Busca em Amplitude)
+function buscaEmAmplitude() {
+  var tempoInicio = Date.now();
+  
+  var abertos = [{
+    board: tabuleiro.slice(),
+    pai: null
+  }];
+  
+  var fechados = new Set();
+  fechados.add(tabuleiro.join());
+  var expandidos = 0;
+
+  while (abertos.length > 0) {
+    var atual = abertos.shift();
+    expandidos++;
+
+    if (atual.board.join() === objetivo.join()) {
+      var caminho = [];
+      var no = atual;
+      while (no) { 
+        caminho.push(no.board); 
+        no = no.pai; 
+      }
+      caminho.reverse();
+      animarSolucao(caminho);
+      
+      document.getElementById('info').innerText = 
+        'BFS Sucesso! Movimentos: ' + (caminho.length - 1) + 
+        ' | Nós expandidos: ' + expandidos + 
+        ' | Tempo: ' + (Date.now() - tempoInicio) + 'ms';
+      return;
+    }
+
+    if (expandidos > 50000) {
+      document.getElementById('info').innerText = 'Busca muito longa. Tente embaralhar novamente.';
+      return;
+    }
+
+    var vazio = atual.board.indexOf(0);
+    var movimentos = [-4, 4, -1, 1];
+    
+    for (var m = 0; m < movimentos.length; m++) {
+      var prox = vazio + movimentos[m];
+      
+      if (prox < 0 || prox >= 16) continue;
+      if (movimentos[m] === -1 && vazio % 4 === 0) continue;
+      if (movimentos[m] === 1 && vazio % 4 === 3) continue;
+
+      var novoBoard = atual.board.slice();
+      novoBoard[vazio] = novoBoard[prox];
+      novoBoard[prox] = 0;
+
+      var boardStr = novoBoard.join();
+      
+      if (fechados.has(boardStr)) continue;
+
+      fechados.add(boardStr);
+      
+      abertos.push({
+        board: novoBoard,
+        pai: atual
+      });
+    }
+  }
+  
+  document.getElementById('info').innerText = 'BFS: Nenhuma solução encontrada!';
+}
+
+// Animação da solução
+function animarSolucao(caminho) {
+  var i = 0;
+  var intervalo = setInterval(function() {
+    if (i >= caminho.length) {
+      clearInterval(intervalo);
+      return;
+    }
+    tabuleiro = caminho[i];
+    desenhar();
+    i++;
+  }, 300);
+}
+
+// Inicializa o jogo
+desenhar();
