@@ -14,20 +14,31 @@
 
         <div class="grid" id="grid"></div>
 
+
         <div class="embaralhar">
             <button onclick="embaralhar()">Embaralhar</button>
         </div>
 
 
+        <div class="controls">
 
-        <div class="controls">       
-            <button class="btn-solve" onclick="busca_em_amplitude()">Resolver com BFS</button>
+            
 
-            <button class="btn-solve" onclick="busca_melhor_escolha()">Resolver com Melhor Escolha</button>
+            
+
+            <button class="btn-solve" onclick="resolver_busca()">Busca em Amplitude</button>
+
+            <p id="passos"></p>
+            
+            <button class="controls__animacao" onclick="animarSolucao()" id="mensagem">Iniciar solucao</button>
         </div>
 
 
 
         <script src="./scripts/puzzle.js"></script>
     </body>
+
+
+
+
 </html>
