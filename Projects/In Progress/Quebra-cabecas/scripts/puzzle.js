@@ -107,9 +107,14 @@ caminhoSolucao = null;
 
 
 /* ===== HEURISTICA BUSCA MELHOR ESCOLHA ====*/ 
+/**
+ * Função Heurística: Baseada no Capítulo 4 de George Luger.
+ * Avalia o quão próximo um estado está do objetivo contando peças fora do lugar.
+ */
 function heuristica(estado) {
   var foraDoLugar = 0;
   for (var i = 0; i < estado.length; i++) {
+    // Luger sugere não contar o espaço vazio (0) na estimativa de distância
     if (estado[i] !== 0 && estado[i] !== objetivo[i]) {
       foraDoLugar++;
     }
@@ -117,40 +122,54 @@ function heuristica(estado) {
   return foraDoLugar;
 }
 
+/**
+ * Algoritmo Busca de Melhor Escolha (Best-First Search) - George Luger.
+ * Utiliza conhecimento específico do problema para guiar a busca (heurística).
+ */
 function busca_melhor_escolha() {
+  // Define o nodo inicial com o estado atual, sem pai, sem caminho prévio e com valor h(n)
   var nodoInicial = {
     estado: tabuleiro.slice(),
     pai: null,
     caminho: [],
-    h: heuristica(tabuleiro)
+    h: heuristica(tabuleiro) // Valor heurístico inicial (estimativa até o objetivo)
   };
 
+  // Lista 'abertos': nodos encontrados mas ainda não expandidos (fronteira)
   var abertos = [nodoInicial];
+  // Lista 'fechados': estados já visitados para evitar loops infinitos
   var fechados = new Set();
 
   while (abertos.length > 0) {
-    // Ordena abertos pelo valor da heurística h (Best-First Search de Luger)
+    // Luger: Ordenar 'abertos' com base no valor da heurística h
+    // Isso garante que sempre removeremos o nodo que parece estar mais perto do alvo
     abertos.sort(function(a, b) {
       return a.h - b.h;
     });
 
+    // Remove X (o melhor nodo atual) da lista de abertos
     var X = abertos.shift();
 
+    // Teste de Objetivo: Verifica se o estado atual é a solução
     if (X.estado.join(',') === objetivo.join(',')) {
-      return X.caminho;
+      return X.caminho; // Sucesso: retorna a sequência de movimentos
     }
 
+    // Adiciona o estado de X em 'fechados' para marcar como visitado
     fechados.add(X.estado.join(','));
 
+    // Gera todos os possíveis estados sucessores de X
     var filhos = gerarFilhos(X.estado);
 
     filhos.forEach(function(filho) {
       var filhoStr = filho.join(',');
 
+      // Regra de Luger: Se o filho já foi visitado, descarta para evitar ciclos
       if (fechados.has(filhoStr)) {
         return;
       }
 
+      // Verifica se o mesmo estado já está na fila de espera para ser avaliado
       var estaEmAbertos = abertos.some(function(n) {
         return n.estado.join(',') === filhoStr;
       });
@@ -159,16 +178,20 @@ function busca_melhor_escolha() {
         return;
       }
 
+      // Cria um novo nodo para o filho, calculando sua própria heurística h(filho)
       var nodoFilho = {
         estado: filho,
         pai: X,
         caminho: X.caminho.concat([filho]),
-        h: heuristica(filho)
+        h: heuristica(filho) // Calcula o custo estimado para este novo estado
       };
+      
+      // Adiciona o novo nodo em 'abertos' para avaliação futura
       abertos.push(nodoFilho);
     });
   }
 
+  // Falha: Se 'abertos' esvaziar e o objetivo não foi alcançado
   return null;
 }
 
