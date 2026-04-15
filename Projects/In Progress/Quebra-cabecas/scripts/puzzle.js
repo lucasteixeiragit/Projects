@@ -105,6 +105,75 @@ caminhoSolucao = null;
     desenhar();
 }
 
+
+/* ===== HEURISTICA BUSCA MELHOR ESCOLHA ====*/ 
+function heuristica(estado) {
+  var foraDoLugar = 0;
+  for (var i = 0; i < estado.length; i++) {
+    if (estado[i] !== 0 && estado[i] !== objetivo[i]) {
+      foraDoLugar++;
+    }
+  }
+  return foraDoLugar;
+}
+
+function busca_melhor_escolha() {
+  var nodoInicial = {
+    estado: tabuleiro.slice(),
+    pai: null,
+    caminho: [],
+    h: heuristica(tabuleiro)
+  };
+
+  var abertos = [nodoInicial];
+  var fechados = new Set();
+
+  while (abertos.length > 0) {
+    // Ordena abertos pelo valor da heurística h (Best-First Search de Luger)
+    abertos.sort(function(a, b) {
+      return a.h - b.h;
+    });
+
+    var X = abertos.shift();
+
+    if (X.estado.join(',') === objetivo.join(',')) {
+      return X.caminho;
+    }
+
+    fechados.add(X.estado.join(','));
+
+    var filhos = gerarFilhos(X.estado);
+
+    filhos.forEach(function(filho) {
+      var filhoStr = filho.join(',');
+
+      if (fechados.has(filhoStr)) {
+        return;
+      }
+
+      var estaEmAbertos = abertos.some(function(n) {
+        return n.estado.join(',') === filhoStr;
+      });
+
+      if (estaEmAbertos) {
+        return;
+      }
+
+      var nodoFilho = {
+        estado: filho,
+        pai: X,
+        caminho: X.caminho.concat([filho]),
+        h: heuristica(filho)
+      };
+      abertos.push(nodoFilho);
+    });
+  }
+
+  return null;
+}
+
+/* ===== BUSCA EM AMPLITUDE ===== */
+
 function busca_em_amplitude() {
   var nodoInicial = {
     estado: tabuleiro.slice(),
@@ -182,13 +251,17 @@ function gerarFilhos(estado){
 return filhos;
 }
 
-function resolver_busca() {
+function resolver_busca(tipo) {
   // desabilita o botão de busca enquanto calcula
   var btnBuscar = document.querySelector('.controls__animacao');
   if (btnBuscar) btnBuscar.disabled = true;
 
-  // executa a busca 
-  caminhoSolucao = busca_em_amplitude();
+  // escolhe algoritmo
+  if (tipo === 'melhor_escolha') {
+    caminhoSolucao = busca_melhor_escolha();
+  } else {
+    caminhoSolucao = busca_em_amplitude();
+  }
 
   // pega elementos da interface
   var paragrafoPassos = document.getElementById('passos');
@@ -249,6 +322,9 @@ function animarSolucao() {
     }
   }, tempoMs);
 }
+
+
+
 
 
 // Inicializar o tabuleiro
