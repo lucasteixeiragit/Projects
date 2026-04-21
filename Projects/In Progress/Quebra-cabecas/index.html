@@ -11,27 +11,28 @@
     <body>
 
         <h1>Quebra Cabeças</h1>
+        <p>Abra o console do navegador para visualizar as tabelas em tempo real</p>
+
+        <p>Para o teste de comparação, o tabuleiro foi embaralhado 30x, como array inicial ficou: (16) [1, 10, 2, 4, 5, 7, 3, 8, 9, 14, 6, 11, 13, 0, 15, 12]</p>
 
         <div class="grid" id="grid"></div>
 
 
         <div class="embaralhar">
             <button onclick="embaralhar()">Embaralhar</button>
+            <button onclick="configurarEstadoTeste()">Estado de Teste (Comparativo)</button>
         </div>
 
 
-        <div class="controls">
-
-            
-
-            
-
+        <div class="controls">       
             <button class="btn-solve" onclick="resolver_busca('amplitude')">Busca em Amplitude</button>
-            <button class="btn-solve" onclick="resolver_busca('melhor_escolha')">Busca Melhor Escolha</button>
+            <button class="btn-solve" onclick="resolver_busca('melhor_escolha')">Busca Melhor Escolha</button>        
+        </div>
 
+        <div>
             <p id="passos"></p>
-            
             <button class="controls__animacao" onclick="animarSolucao()" id="mensagem">Iniciar solucao</button>
+            
         </div>
 
 
