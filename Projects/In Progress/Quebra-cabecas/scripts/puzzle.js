@@ -5,6 +5,7 @@ const tabuleiroInicial = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
 const objetivo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
 
 let numeroMovimentos = 10;
+let contadorEmbaralhar = 0;
 
 let caminhoSolucao = null; //var para guardar a solucao e imprimir na tela
 
@@ -62,7 +63,13 @@ function mover(indice) {
 
 // funcao para embaralhar o tabuleiro, fazendo movimentos validos, garantindo que sempre tenha solucao
 function embaralhar() {
-  console.log("Embaralhar",);
+  if (contadorEmbaralhar >= 3) {
+    alert("Limite de embaralhamento atingido (máximo 3 vezes) para evitar problemas de memória.");
+    return;
+  }
+  
+  contadorEmbaralhar++;
+  console.log("Embaralhar " + contadorEmbaralhar + "/3");
 
   // se houver animação em andamento, cancele
 if (intervaloAnimacao) {
@@ -132,9 +139,9 @@ function configurarEstadoTeste() {
   caminhoSolucao = null;
 
   // Define o estado fornecido pelo usuário
-  tabuleiro = [1, 10, 2, 4, 5, 7, 3, 8, 9, 14, 6, 11, 13, 0, 15, 12];
+  tabuleiro = [5, 1, 3, 4, 9, 0, 6, 8, 13, 2, 7, 12, 14, 10, 11, 15];
   
-  console.log("Tabuleiro configurado para o estado de teste comparativo! ([1, 10, 2, 4, 5, 7, 3, 8, 9, 14, 6, 11, 13, 0, 15, 12])");
+  console.log("Tabuleiro configurado para o estado de teste comparativo! ([5, 1, 3, 4, 9, 0, 6, 8, 13, 2, 7, 12, 14, 10, 11, 15])");
   desenhar();
 }
 
@@ -319,13 +326,6 @@ function busca_em_amplitude() {
   }
 
   // retorna FALHA % não restam estados
-  const t1 = performance.now();
-  console.log(`%c Busca em Amplitude concluída em ${(t1 - t0).toFixed(2)} ms`, "font-weight: bold; color: blue");
-  
-  // Exibe memória mesmo em caso de falha
-  if (window.performance && window.performance.memory) {
-    console.log(`Memória usada: ${(window.performance.memory.usedJSHeapSize / (1024 * 1024)).toFixed(2)} MB`);
-  }
   return null;
 }
 
