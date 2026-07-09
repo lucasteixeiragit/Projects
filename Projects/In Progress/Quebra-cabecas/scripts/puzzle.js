@@ -5,7 +5,10 @@ const tabuleiroInicial = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
 const objetivo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
 
 let numeroMovimentos = 10;
+<<<<<<< HEAD
 let contadorEmbaralhar = 0;
+=======
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
 
 let caminhoSolucao = null; //var para guardar a solucao e imprimir na tela
 
@@ -63,6 +66,7 @@ function mover(indice) {
 
 // funcao para embaralhar o tabuleiro, fazendo movimentos validos, garantindo que sempre tenha solucao
 function embaralhar() {
+<<<<<<< HEAD
   if (contadorEmbaralhar >= 3) {
     alert("Limite de embaralhamento atingido (máximo 3 vezes) para evitar problemas de memória.");
     return;
@@ -70,6 +74,9 @@ function embaralhar() {
   
   contadorEmbaralhar++;
   console.log("Embaralhar " + contadorEmbaralhar + "/3");
+=======
+  console.log("Embaralhar",);
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
 
   // se houver animação em andamento, cancele
 if (intervaloAnimacao) {
@@ -147,6 +154,7 @@ function configurarEstadoTeste() {
 
 
 
+
 /* ===== HEURISTICA BUSCA MELHOR ESCOLHA ====*/ 
 
  /* Avalia o quão próximo um estado está do objetivo contando peças fora do lugar. */
@@ -167,9 +175,13 @@ function heuristica(estado) {
 }
 
 function busca_melhor_escolha() {
+<<<<<<< HEAD
   // Captura o tempo inicial para medição de performance
   const t0 = performance.now();
   // abertos := [Inicial]; % inicialização
+=======
+  // define o nodo inicial com o estado atual, sem pai, sem caminho prévio e com valor h(n)
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
   const nodoInicial = {
     estado: tabuleiro.slice(),
     pai: null,
@@ -177,28 +189,55 @@ function busca_melhor_escolha() {
     h: heuristica(tabuleiro)
   };
 
+<<<<<<< HEAD
   let abertos = [nodoInicial];
   // fechados := [ ];
+=======
+  // Lista 'abertos': nodos encontrados mas ainda não expandidos
+  let abertos = [nodoInicial];
+  // Lista 'fechados': estados já visitados para evitar loops infinitos
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
   const fechados = new Set();
   let contadorNodos = 0;
 
   // enquanto abertos ≠ [ ] faça
   while (abertos.length > 0) {
+<<<<<<< HEAD
     // (Para Melhor Escolha: ordena abertos pela heurística)
+=======
+    // ordenar 'abertos' com base no valor da heurística h (Melhor Escolha)
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
     abertos.sort(function(a, b) {
       return a.h - b.h;
     });
 
+<<<<<<< HEAD
     // remova o estado mais à esquerda em abertos, chame-o de X;
     const X = abertos.shift();
+=======
+    // Remove X (o melhor nodo atual) da lista de abertos
+    const X = abertos.shift();
+    contadorNodos++;
+    const labelTabela = "Tabela " + String.fromCharCode(64 + (contadorNodos % 26 || 26)) + (contadorNodos > 26 ? Math.floor((contadorNodos - 1) / 26) : "");
+
+    // LOG VISUAL: Mostra no console o estado atual sendo explorado e o tamanho das listas
+    console.log("%c Explorando " + labelTabela + " (Melhor Escolha):", "color: red");
+    console.log("Heurística h(n): " + X.h);
+    console.log("Abertos: " + abertos.length + " | Fechados: " + fechados.size);
+    console.table([X.estado.slice(0,4), X.estado.slice(4,8), X.estado.slice(8,12), X.estado.slice(12,16)]);
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
 
     // se X for um objetivo, então retorna SUCESSO % objetivo encontrado
     if (X.estado.join(',') === objetivo.join(',')) {
+<<<<<<< HEAD
       // Captura o tempo final e calcula a duração da busca
       const t1 = performance.now();
      
 
       return X.caminho;
+=======
+      return X.caminho; // se sucesso: retorna a sequência de movimentos
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
     }
 
     // senão início
@@ -213,11 +252,26 @@ function busca_melhor_escolha() {
     // coloque X em fechados;
     fechados.add(X.estado.join(','));
 
+<<<<<<< HEAD
     filhos.forEach(function(filho) {
       const filhoStr = filho.join(',');
 
       // descarte filhos de X se já estiverem em abertos ou fechados; % checagem de laços
       const estaEmFechados = fechados.has(filhoStr);
+=======
+    // Gera todos os possíveis estados sucessores de X
+    const filhos = gerarFilhos(X.estado);
+
+    filhos.forEach(function(filho) {
+      const filhoStr = filho.join(',');
+
+      // se o filho já foi visitado, descarta para evitar ciclos
+      if (fechados.has(filhoStr)) {
+        return;
+      }
+
+      // Verifica se o mesmo estado já está na fila de espera para ser avaliado
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
       const estaEmAbertos = abertos.some(function(n) {
         return n.estado.join(',') === filhoStr;
       });
@@ -226,7 +280,11 @@ function busca_melhor_escolha() {
         return;
       }
 
+<<<<<<< HEAD
       // coloque os filhos que restam no final à direita de abertos % põe na fila
+=======
+      // Cria um novo nodo para o filho, calculando sua própria heurística h(filho)
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
       const nodoFilho = {
         estado: filho,
         pai: X,
@@ -246,9 +304,12 @@ function busca_melhor_escolha() {
 /* ===== BUSCA EM AMPLITUDE ===== */
 
 function busca_em_amplitude() {
+<<<<<<< HEAD
   // Captura o tempo inicial para medição de performance
   const t0 = performance.now();
   // abertos := [Inicial]; % inicialização
+=======
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
   const nodoInicial = {
     estado: tabuleiro.slice(),
     pai: null,
@@ -256,14 +317,29 @@ function busca_em_amplitude() {
   };
 
   let abertos = [nodoInicial];
+<<<<<<< HEAD
   // fechados := [ ];
   const fechados = new Set();
+=======
+  const fechados = new Set(); // uso de Set torna a checagem mais rápida
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
   let contadorNodos = 0;
 
   // enquanto abertos ≠ [ ] faça % restam estados
   while (abertos.length > 0) {
+<<<<<<< HEAD
     // remova o estado mais à esquerda em abertos, chame-o de X;
     const X = abertos.shift();
+=======
+    const X = abertos.shift(); // remove da esquerda (FIFO)
+    contadorNodos++;
+    const labelTabela = "Tabela " + String.fromCharCode(64 + (contadorNodos % 26 || 26)) + (contadorNodos > 26 ? Math.floor((contadorNodos-1)/26) : "");
+
+    // LOG VISUAL: Mostra no console o progresso da Busca em Amplitude
+    console.log("%c Explorando " + labelTabela + " (Amplitude):", "color: red");
+    console.log("Abertos: " + abertos.length + " | Fechados: " + fechados.size);
+    console.table([X.estado.slice(0,4), X.estado.slice(4,8), X.estado.slice(8,12), X.estado.slice(12,16)]);
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
 
     // se X for um objetivo, então retorna SUCESSO % objetivo encontrado
     if (X.estado.join(',') === objetivo.join(',')) {
@@ -282,11 +358,26 @@ function busca_em_amplitude() {
     // coloque X em fechados;
     fechados.add(X.estado.join(','));
 
+<<<<<<< HEAD
     filhos.forEach(function(filho) {
       const filhoStr = filho.join(',');
 
       // descarte filhos de X se já estiverem em abertos ou fechados; % checagem de laços
       const estaEmFechados = fechados.has(filhoStr);
+=======
+    // gera os estados filhos de X (cada filho é um array de 16 números)
+    const filhos = gerarFilhos(X.estado);
+
+    filhos.forEach(function(filho) {
+      const filhoStr = filho.join(',');
+
+      // verificar se filho já está em fechados
+      if (fechados.has(filhoStr)) {
+        return; // descarta este filho
+      }
+
+      // verificar se filho já está em abertos (abertos guarda objetos)
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
       const estaEmAbertos = abertos.some(function(n) {
         return n.estado.join(',') === filhoStr;
       });
@@ -295,7 +386,11 @@ function busca_em_amplitude() {
         return;
       }
 
+<<<<<<< HEAD
       // coloque os filhos que restam no final à direita de abertos % põe na fila
+=======
+      // se não visitado, cria nodoFilho e coloca no final (direita) da fila abertos
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
       const nodoFilho = {
         estado: filho,
         pai: X,
