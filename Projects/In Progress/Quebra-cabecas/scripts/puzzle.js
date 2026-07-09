@@ -196,12 +196,8 @@ function busca_melhor_escolha() {
     if (X.estado.join(',') === objetivo.join(',')) {
       // Captura o tempo final e calcula a duração da busca
       const t1 = performance.now();
-      console.log(`%c Busca Melhor Escolha concluída em ${(t1 - t0).toFixed(2)} ms`, "font-weight: bold; color: blue");
-      
-      // Se disponível no navegador, exibe o uso de memória do Heap JS em MB
-      if (window.performance && window.performance.memory) {
-        console.log(`Memória usada: ${(window.performance.memory.usedJSHeapSize / (1024 * 1024)).toFixed(2)} MB`);
-      }
+     
+
       return X.caminho;
     }
 
@@ -243,14 +239,7 @@ function busca_melhor_escolha() {
     // fim
   }
 
-  // retorna FALHA % não restam estados
-  const t1 = performance.now();
-  console.log(`%c Busca Melhor Escolha concluída em ${(t1 - t0).toFixed(2)} ms`, "font-weight: bold; color: blue");
-  
-  // Exibe memória mesmo em caso de falha
-  if (window.performance && window.performance.memory) {
-    console.log(`Memória usada: ${(window.performance.memory.usedJSHeapSize / (1024 * 1024)).toFixed(2)} MB`);
-  }
+  // retorna FALHA % não restam estados  
   return null;
 }
 
@@ -278,14 +267,6 @@ function busca_em_amplitude() {
 
     // se X for um objetivo, então retorna SUCESSO % objetivo encontrado
     if (X.estado.join(',') === objetivo.join(',')) {
-      // Captura o tempo final e calcula a duração da busca
-      const t1 = performance.now();
-      console.log(`%c Busca em Amplitude concluída em ${(t1 - t0).toFixed(2)} ms`, "font-weight: bold; color: blue");
-      
-      // Se disponível no navegador, exibe o uso de memória do Heap JS em MB
-      if (window.performance && window.performance.memory) {
-        console.log(`Memória usada: ${(window.performance.memory.usedJSHeapSize / (1024 * 1024)).toFixed(2)} MB`);
-      }
       return X.caminho;
     }
 
@@ -422,9 +403,6 @@ function animarSolucao() {
     }
   }, tempoMs);
 }
-
-
-
 
 
 // Inicializar o tabuleiro
