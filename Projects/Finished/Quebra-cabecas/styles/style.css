@@ -1,0 +1,59 @@
+
+body{
+    background-color: #ffffff;
+    text-align: center;
+    padding: 5%;
+}
+
+.grid{
+    display: inline-grid;
+    grid-template-columns: repeat(4, 5.30rem);
+    grid-template-rows: repeat(4, 5.30rem);
+    gap: 5%;
+    background-color: gray;
+    padding: 8%;
+    border-radius: 5%;
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.peca {
+    width: 100%;
+    height: 100%;
+    background-color: lightblue;
+    border: 1px solid black;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.peca__vazia {
+    background-color: transparent;
+    border: none;
+    cursor: default;
+}
+
+.embaralhar{
+    display: flex;
+    justify-content: center;
+    margin: 2%;
+    gap: 5%;
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 30b130927b6842a2d8b10a42beeec4acc09bda49
+
+}
+
+.controls{
+    display: flex;
+    justify-content: center;
+    margin: 2%;
+    gap: 5%;
+}
+
+.controls__animacao{
+    display: none;
+}
